@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Suppliers</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newSupplier() { showform('insert'); }
+    function deleteSupplier(pid) { showform ('delete'); }
+    function browseSuppliers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseSuppliers()">
+<h1>Suppliers</h1>
+
+[ <a href="Gogurts.html">Gogurts</a> | <a href="Suppliers.html">Suppliers</a> | <a href="Customers.html">Customers</a> 
+| <a href="Orders.html">Orders</a> | <a href="Sales.html">Sales</a>]
+
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newSupplier()">New</a></th>
+    <th>idSupplier</th>
+    <th>supplierName</th>
+    <th>email</th>
+  </tr>
+  <tr>
+    <td><a href="#" onclick="deleteSuppliers('this.idSupplier')">Delete</a></td>
+    <td align="right">1</td>
+    <td>Good Yogurt Co.</td>
+    <td align="right">goodyogurt@sample.com</td>
+  </tr>
+  <tr>
+    <td><a href="#" onclick="deleteSuppliers('this.idSupplier')">Delete</a></td>
+    <td align="right">2</td>
+    <td>All Curds Inc.</td>
+    <td align="right">allcurds@sample.com</td>
+  </tr>
+  <tr>
+    <td><a href="#" onclick="deleteSuppliers('this.idSupplier')">Delete</a></td>
+    <td align="right">3</td>
+    <td>South Sides Products</td>
+    <td align="right">sideproducts@sample.com</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addSupplier">
+        <legend><strong>Add Supplier</strong></legend>
+          <fieldset class="fields">
+            <label> supplierName </label> <input type="text" name="supplierName">
+            <label> email </label> <input type="text" name="email">
+      </fieldset>
+          <input class="btn" type="submit" id="addSupplier" value="Add Supplier">
+          <input class="btn" type="button" value="cancel" onClick="browseSuppliers()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+</div><!-- update -->
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteSupplier">
+      <legend><strong>Delete Supplier</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="idSupplier" id="deleteidSupplier" value="1">
+          <label><strong>ID:</strong></label> 1
+            <label> <strong>Name</strong> </label> Good Yogurt Co.
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteSupplier" value="Delete Supplier">
+          <input class="btn" type="button" value="cancel" onClick="browseSuppliers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>
