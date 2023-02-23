@@ -1,147 +1,211 @@
 <html>
-<head>
-<title>Gogurts</title>
-<link href="style.css" rel="stylesheet" type="text/css" />
-<script language="JavaScript">
-		function showform(dowhat) {
-			/*
-			* four DIVS: browse, insert, update, delete
-			* this function sets one visible the others not
-			*/
-			if (dowhat == 'insert'){
-				document.getElementById('browse').style.display = 'none';
-				document.getElementById('insert').style.display = 'block';
-				document.getElementById('update').style.display = 'none';
-				document.getElementById('delete').style.display = 'none';
-			}
-			else if (dowhat == 'update'){
-				document.getElementById('browse').style.display = 'none';
-				document.getElementById('insert').style.display = 'none';
-				document.getElementById('update').style.display = 'block';
-				document.getElementById('delete').style.display = 'none';
-			}
-			else if (dowhat == 'delete'){
-				document.getElementById('browse').style.display = 'none';
-				document.getElementById('insert').style.display = 'none';
-				document.getElementById('update').style.display = 'none';
-				document.getElementById('delete').style.display = 'block';
-			}
-      else if (dowhat == 'all'){
-				document.getElementById('browse').style.display = 'block';
-				document.getElementById('insert').style.display = 'block';
-				document.getElementById('update').style.display = 'block';
-				document.getElementById('delete').style.display = 'block';
-			}
-			else { //by default display browse
-				document.getElementById('browse').style.display = 'block';
-				document.getElementById('insert').style.display = 'none';
-				document.getElementById('update').style.display = 'none';
-				document.getElementById('delete').style.display = 'none';
-			}
-		}
-    function newGogurt() { showform('insert'); }
-    function updateGogurt(pid) { showform('update'); }
-    function deleteGogurt(pid) { showform ('delete'); }
-    function browseGogurt() { showform ('browse'); }
-    function showAll() { showform ('all'); }
-</script>
-</head>
+  <head>
+    <title>Gogurts</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <script language="JavaScript">
+      function showform(dowhat) {
+        /*
+         * four DIVS: browse, insert, update, delete
+         * this function sets one visible the others not
+         */
+        if (dowhat == "insert") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "block";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "none";
+        } else if (dowhat == "update") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "block";
+          document.getElementById("delete").style.display = "none";
+        } else if (dowhat == "delete") {
+          document.getElementById("browse").style.display = "none";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "block";
+        } else if (dowhat == "all") {
+          document.getElementById("browse").style.display = "block";
+          document.getElementById("insert").style.display = "block";
+          document.getElementById("update").style.display = "block";
+          document.getElementById("delete").style.display = "block";
+        } else {
+          //by default display browse
+          document.getElementById("browse").style.display = "block";
+          document.getElementById("insert").style.display = "none";
+          document.getElementById("update").style.display = "none";
+          document.getElementById("delete").style.display = "none";
+        }
+      }
+      function newGogurt() {
+        showform("insert");
+      }
+      function updateGogurt(pid) {
+        showform("update");
+      }
+      function deleteGogurt(pid) {
+        showform("delete");
+      }
+      function browseGogurt() {
+        showform("browse");
+      }
+      function showAll() {
+        showform("all");
+      }
+    </script>
+  </head>
 
-<body onload="browseGogurt()">
-<h1>Gogurts</h1>
-
-[ <a href="index.html">Gogurts</a> | <a href="Suppliers.html">Suppliers</a> | <a href="Customers.html">Customers</a> 
-| <a href="Orders.html">Orders</a> | <a href="Sales.html">Sales</a>]
-
-<div id="browse">
-<p><a href="#" onClick="showAll()">Display all forms</a> </p>
-<table border="1" cellpadding="5">
-  <tr>
-    <th><a href="#" onClick="newGogurts()">New</a></th>
-    <th></th>
-    <th>idGogurt</th>
-    <th>flavor</th>
-    <th>qtyOnHand</th>
-    <th>price</th>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
-    <td><a href="#" onclick="deleteGogurts('this.idGogurt')">Delete</a></td>
-    <td align="right">1</td>
-    <td>Cherry</td>
-    <td align="right">25</td>
-    <td>2.99</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
-    <td><a href="#" onclick="deleteGogurts('this.personID')">Delete</a></td>
-    <td align="right">2</td>
-    <td>Watermelon</td>
-    <td align="right">150</td>
-    <td >2.99</td>
-  </tr>
-  <tr>
-    <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
-    <td><a href="#" onclick="deleteGogurts('this.personID')">Delete</a></td>
-    <td align="right">3</td>
-    <td>Green Apple</td>
-    <td align="right">99</td>
-    <td>3.49</td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-</div> <!-- browse -->
-<div id="insert">
-    <form method="POST" id="addGogurt">
-        <legend><strong>Add Gogurt</strong></legend>
-          <fieldset class="fields">
-            <label> flavor </label> <select name="flavor">
-            	<option value="0">&nbsp;</option>
-                <option value="1">Cherry</option>
-                <option value="2">Watermelon</option>
-                <option value="3">Green Apple</option>
-              </select>
-            <label> qtyOnHand </label> <input type="text" name="qtyOnHand">
-            <label> price </label> <input type="text" name="price">
-      </fieldset>
-          <input class="btn" type="submit" id="addGogurt" value="Add Gogurt">
-          <input class="btn" type="button" value="cancel" onClick="browseGogurt()">
-	</form> 
-</div><!-- insert -->
-<p>&nbsp;</p>
-<div id="update">
-    <form method="POST" id="UpdatePerson">
-        <legend><strong>Update Gogurt</strong></legend>
-          <fieldset class="fields">
-          <input type="hidden" name="idGogurt" id="updateidGogurt" value="1">
-          <label> flavor </label> <select name="flavor">
+  <body onload="browseGogurt()">
+    <h1 class="bg-light text-black-25 text-center p-2 bg-body">Gogurt Inc</h1>
+    
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <div class="collapse navbar-collapse p-1" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a href="index.html" class="nav-link active">Gogurts</a>
+          </li>
+          <li class="nav-item active">
+            <a href="Suppliers.html" class="nav-link">Suppliers</a>
+          </li>
+          <li class="nav-item active">
+            <a href="Customers.html" class="nav-link">Customers</a>
+          </li>
+          <li class="nav-item">
+            <a href="Orders.html" class="nav-link">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a href="Sales.html" class="nav-link">Sales</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <h2 class="p-1 m-1">Gogurts</h2>
+    <div id="browse">
+      <p class="p-1 m-2">
+        <p class="bg-light m-2"><a class="bg-light m-2" href="#" onClick="showAll()"><i class="bi bi-list"></i></a>Display all forms</p>
+      </p>
+      <table class="p-1 m-2 bg-light" border="1" cellpadding="5">
+        <tr>
+          <th><a class="text" href="#" onClick="newGogurts()">New</a></th>
+          <th></th>
+          <th>idGogurt</th>
+          <th>flavor</th>
+          <th>qtyOnHand</th>
+          <th>price</th>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
+          <td>
+            <a class="text-danger" href="#" onclick="deleteGogurts('this.idGogurt')">Delete</a>
+          </td>
+          <td align="right">1</td>
+          <td>Cherry</td>
+          <td align="right">25</td>
+          <td>2.99</td>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
+          <td>
+            <a class="text-danger" href="#" onclick="deleteGogurts('this.personID')">Delete</a>
+          </td>
+          <td align="right">2</td>
+          <td>Watermelon</td>
+          <td align="right">150</td>
+          <td>2.99</td>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateGogurts('this.idGogurt')">Edit</a></td>
+          <td>
+            <a class="text-danger" href="#" onclick="deleteGogurts('this.personID')">Delete</a>
+          </td>
+          <td align="right">3</td>
+          <td>Green Apple</td>
+          <td align="right">99</td>
+          <td>3.49</td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+    </div>
+    <!-- browse -->
+    <div class="p-1 m-3" id="insert">
+      <form method="POST" id="addGogurt">
+        <div class="mb-3">
+          <h4 class="mb-3">Add Gogurt</h4>
+          <label for="flavor" class="form-label">Flavor</label>
+          <select class="form-select" name="flavor" id="flavor">
             <option value="0">&nbsp;</option>
-              <option value="1">Cherry</option>
-              <option value="2">Watermelon</option>
-              <option value="3">Green Apple</option>
-            </select>
-          <label> qtyOnHand </label> <input type="text" name="qtyOnHand">
-          <label> price </label> <input type="text" name="price">
-      </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveGogurt" value="Save Update Gogurt">
-          <input class="btn" type="button" value="cancel" onClick="browseGogurt()">
-	</form> 
-</div><!-- update -->
-<p>&nbsp;</p>
-<div id="delete" style="display: block">
-  <form method="POST" id="deleteGogurt">
-      <legend><strong>Delete Gogurt</strong></legend>
-          <fieldset class="fields">
+            <option value="1">Cherry</option>
+            <option value="2">Watermelon</option>
+            <option value="3">Green Apple</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="qtyOnHand" class="form-label">Qty On Hand</label>
+          <input type="text" class="form-control" name="qtyOnHand" id="qtyOnHand">
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="text" class="form-control" name="price" id="price">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Gogurt</button>
+        <button type="button" class="btn btn-secondary" onClick="browseGogurt()">Cancel</button>
+      </form>
+    </div>
+    <!-- insert -->
+    <p>&nbsp;</p>
+    <div class="p-1 m-3" id="update">
+      <form method="POST" id="UpdatePerson">
+        <legend><h4 class="p-1">Update Gogurt</h4></legend>
+        <fieldset class="fields">
+          <input type="hidden" name="idGogurt" id="updateidGogurt" value="1" />
+          <label class="form-label">Flavor</label>
+          <select class="form-select" name="flavor">
+            <option value="0">&nbsp;</option>
+            <option value="1">Cherry</option>
+            <option value="2">Watermelon</option>
+            <option value="3">Green Apple</option>
+          </select>
+          <label class="form-label">Qty On Hand</label>
+          <input type="text" class="form-control" name="qtyOnHand" />
+          <label class="form-label">Price</label>
+          <input type="text" class="form-control" name="price" />
+        </fieldset>
+        <input class="btn btn-primary" type="submit" id="UpdateSaveGogurt" value="Save Update Gogurt" />
+        <input class="btn btn-secondary" type="button" value="Cancel" onClick="browseGogurt()" />
+      </form>
+    </div>
+    <!-- update -->
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+      <form method="POST" id="deleteGogurt" class="border p-3">
+        <legend class="fs-5"><strong>Delete Gogurt</strong></legend>
+        <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="idGogurt" id="deleteidGogurt" value="1">
-          <label><strong>ID:</strong></label> 1
-            <label> <strong>flavor</strong> </label> Green Apple
-            
-    </fieldset>
-    <input class="btn" type="submit" id="DeleteGogurt" value="Delete Gogurt">
-          <input class="btn" type="button" value="cancel" onClick="browseGogurt()">
-  </form> 
-</div><!-- delete -->
-
-</body>
+          <input type="hidden" name="idGogurt" id="deleteidGogurt" value="1" />
+          <div class="mb-3">
+            <label for="deleteGogurtID" class="form-label"><strong>ID:</strong></label>
+            <input type="text" class="form-control" id="deleteGogurtID" name="deleteGogurtID" value="1" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="deleteGogurtFlavor" class="form-label"><strong>flavor</strong></label>
+            <input type="text" class="form-control" id="deleteGogurtFlavor" name="deleteGogurtFlavor" value="Green Apple" readonly>
+          </div>
+        </fieldset>
+        <div class="d-flex justify-content-between">
+          <input class="btn btn-danger" type="submit" id="DeleteGogurt" value="Delete Gogurt" />
+          <input class="d-inline-flex btn btn-secondary" type="button" value="cancel" onClick="browseGogurt()" />
+        </div>
+      </form>
+    </div>
+    <!-- delete -->
+  </body>
 </html>
