@@ -9,34 +9,34 @@
 			* this function sets one visible the others not
 			*/
 			if (dowhat == 'insert'){
-				document.getElementByClassName('browse').style.display = 'none';
-				document.getElementsByClassName('insert').style.display = 'block';
-				document.getElementsByClassName('update').style.display = 'none';
-				document.getElementsByClassName('delete').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
 			}
 			else if (dowhat == 'update'){
-				document.getElementsByClassName('browse').style.display = 'none';
-				document.getElementsByClassName('insert').style.display = 'none';
-				document.getElementsByClassName('update').style.display = 'block';
-				document.getElementsByClassName('delete').style.display = 'none';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
 			}
 			else if (dowhat == 'delete'){
-				document.getElementsByClassName('browse').style.display = 'none';
-				document.getElementsByClassName('insert').style.display = 'none';
-				document.getElementsByClassName('update').style.display = 'none';
-				document.getElementsByClassName('delete').style.display = 'block';
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
 			}
-            else if (dowhat == 'all'){
-                document.getElementsByClassName('browse').style.display = 'block';
-				document.getElementsByClassName('insert').style.display = 'block';
-				document.getElementsByClassName('update').style.display = 'block';
-				document.getElementsByClassName('delete').style.display = 'block';
+      else if (dowhat == 'all'){
+        document.getElementById('browse').style.display = 'block';
+        document.getElementById('insert').style.display = 'block';
+        document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
 			}
 			else { //by default display browse
-				document.getElementsByClassName('browse').style.display = 'block';
-				document.getElementsByClassName('insert').style.display = 'none';
-				document.getElementsByClassName('update').style.display = 'none';
-				document.getElementsByClassName('delete').style.display = 'none';
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
 			}
 		}
     //Sales functions
@@ -60,9 +60,9 @@
 [ <a href="index.html">Gogurts</a> | <a href="Suppliers.html">Suppliers</a> | <a href="Customers.html">Customers</a> 
 | <a href="Orders.html">Orders</a> | <a href="Sales.html">Sales</a>]
 
-<p>&nbsp;</p>
+<div id="browse">
+<p><a href="#" onClick="showAll()">Display all forms</a> </p>
 <h2>Orders</h2>
-<div class="browse">
 <table border="1" cellpadding="5">
   <tr>
     <th><a href="#" onClick="newOrder()">New</a></th>
@@ -91,23 +91,32 @@
 </table>
 <p>&nbsp;</p>
 </div> <!-- browse -->
-<div class="insert">
+<div id="insert">
     <form method="POST" id="addOrder">
         <legend><strong>Add Order</strong></legend>
           <fieldset class="fields">
-            <label> supplierName </label> <select name="supplierName">
+            <label> Supplier Name </label> <select name="supplierName">
             	<option value="0">&nbsp;</option>
                 <option value="1">Good Yogurt Co.</option>
                 <option value="2">All Curds Inc.</option>
                 <option value="3">South Sides Products</option>
               </select>
-            <label> orderDate </label> <input type="text" name="orderDate">
+            <label> Order Date </label> <input type="text" name="orderDate">
+            <label> Flavor </label> <select name="flavor">
+            <option value="0">&nbsp;</option>
+              <option value="1">Cherry</option>
+              <option value="2">Watermelon</option>
+              <option value="3">Green Apple</option>
+            </select>
+          <label> Order Qty </label> <input type="text" name="orderQty">
+          <label> Unit Price </label> <input type="text" name="unitPrice">
+          <label> LineTotal </label> <input type="text" name="lineTotal">
       </fieldset>
           <input class="btn" type="submit" id="addOrder" value="Add Order">
           <input class="btn" type="button" value="cancel" onClick="browseOrders()">
 	</form> 
 </div><!-- insert -->
-<div class="update">
+<div id="update">
 </div><!-- update -->
 <p>&nbsp;</p>
 <div id="delete" style="display: block">
@@ -124,18 +133,16 @@
   </form> 
 </div><!-- delete -->
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
 <!--OrdersDetails-->
 <h2>Orders Details</h2>
 <div class="browse">
     <table border="1" cellpadding="5">
       <tr>
-        <th><a href="#" onClick="newOrdersDetail()">New</a></th>
+        <th></th>
         <th>idOrdersDetail</th>
         <th>oid</th>
         <th>gid</th>
+        <th>OrderDate</th>
         <th>orderQty</th>
         <th>unitPrice</th>
         <th>lineTotal</th>
@@ -181,42 +188,5 @@
         <td>206.88</td>
       </tr>
 </table>
-<p>&nbsp;</p>
-</div> <!-- browse -->
-<div class="insert">
-    <form method="POST" id="addOrdersDetail">
-        <legend><strong>Add OrdersDetail</strong></legend>
-          <fieldset class="fields">
-            <label> idOrder </label> <input type="text" name="idOrder">
-              <label> flavor </label> <select name="flavor">
-            	<option value="0">&nbsp;</option>
-                <option value="1">Cherry</option>
-                <option value="2">Watermelon</option>
-                <option value="3">Green Apple</option>
-              </select>
-            <label> orderQty </label> <input type="text" name="orderQty">
-            <label> unitPrice </label> <input type="text" name="unitPrice">
-            <label> lineTotal </label> <input type="text" name="lineTotal">
-      </fieldset>
-          <input class="btn" type="submit" id="addOrdersDetail" value="Add OrdersDetail">
-          <input class="btn" type="button" value="cancel" onClick="browseOrdersDetails()">
-	</form> 
-</div><!-- insert -->
-<div class="update">
-</div><!-- update -->
-<p>&nbsp;</p>
-<div class="delete" style="display: block">
-  <form method="POST" id="deleteSalesDetail">
-      <legend><strong>Delete OrdersDetail</strong></legend>
-          <fieldset class="fields">
-          <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="idOrdersDetail" id="deleteidOrdersDetail" value="1">
-          <label><strong>Order ID:</strong></label> 1
-            
-    </fieldset>
-    <input class="btn" type="submit" id="DeleteOrdersDetail" value="Delete OrdersDetail">
-          <input class="btn" type="button" value="cancel" onClick="browseOrdersDetails()">
-  </form> 
-</div><!-- delete -->
 </body>
 </html>
