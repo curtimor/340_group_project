@@ -67,35 +67,35 @@
   <tr>
     <th><a href="#" onClick="newSale()">New</a></th>
     <th>idSale</th>
-    <th>idCustomer</th>
+    <th>customerName</th>
     <th>shipDate</th>
     <th>subTotal</th>
   </tr>
   <tr>
     <td><a href="#" onclick="deleteSale('this.idSale')">Delete</a></td>
     <td align="right">1</td>
-    <td>1</td>
+    <td>Jerry West</td>
     <td align="right">2022-02-20</td>
     <td>100.25</td>
   </tr>
   <tr>
     <td><a href="#" onclick="deleteSale('this.idSale')">Delete</a></td>
     <td align="right">2</td>
-    <td>1</td>
+    <td>Michael East</td>
     <td align="right">2022-12-10</td>
     <td >235.98</td>
   </tr>
   <tr>
     <td><a href="#" onclick="deleteSale('this.idSale')">Delete</a></td>
     <td align="right">3</td>
-    <td>2</td>
+    <td>Sara South</td>
     <td align="right">2022-08-21</td>
     <td>744.35</td>
   </tr>
   <tr>
     <td><a href="#" onclick="deleteSale('this.idSale')">Delete</a></td>
     <td align="right">4</td>
-    <td>3</td>
+    <td>Sara South</td>
     <td align="right">2023-01-06</td>
     <td>113.88</td>
   </tr>
@@ -106,7 +106,7 @@
     <form method="POST" id="addSale">
         <legend><strong>Add Sale</strong></legend>
           <fieldset class="fields">
-            <label> Customer Name </label> <select name="customerName">
+            <label> customerName </label> <select name="customerName">
             	<option value="0">&nbsp;</option>
                 <option value="1">Jerry West</option>
                 <option value="2">Michael East</option>
@@ -154,7 +154,7 @@
         <th></th>
         <th>idSalesDetail</th>
         <th>sid</th>
-        <th>gid</th>
+        <th>flavor</th>
         <th>salesDate</th>
         <th>orderQty</th>
         <th>unitPrice</th>
@@ -164,7 +164,7 @@
         <td><a href="#" onclick="deleteSalesDetail('this.idSalesDetail')">Delete</a></td>
         <td align="right">1</td>
         <td>1</td>
-        <td>1</td>
+        <td>Cherry</td>
         <td align="right">2022-02-13</td>
         <td>4</td>
         <td align="right">2.99</td>
@@ -174,7 +174,7 @@
         <td><a href="#" onclick="deleteSalesDetail('this.idSalesDetail')">Delete</a></td>
         <td align="right">2</td>
         <td>1</td>
-        <td>2</td>
+        <td>Watermelon</td>
         <td align="right">2022-02-13</td>
         <td>3</td>
         <td align="right">2.99</td>
@@ -184,7 +184,7 @@
         <td><a href="#" onclick="deleteSalesDetail('this.idSalesDetail')">Delete</a></td>
         <td align="right">3</td>
         <td>2</td>
-        <td>3</td>
+        <td>Green Apple</td>
         <td align="right">2022-11-13</td>
         <td>6</td>
         <td align="right">3.49</td>
@@ -194,7 +194,7 @@
         <td><a href="#" onclick="deleteSalesDetail('this.idSalesDetail')">Delete</a></td>
         <td align="right">4</td>
         <td>3</td>
-        <td>2</td>
+        <td>Watermelon</td>
         <td align="right">2021-12-17</td>
         <td>8</td>
         <td align="right">2.99</td>
