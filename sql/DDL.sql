@@ -11,13 +11,6 @@ CREATE OR REPLACE TABLE Gogurts (
     PRIMARY KEY (idGogurt)
 );
 
-CREATE OR REPLACE TABLE Orders (
-	idOrder int NOT NULL AUTO_INCREMENT,
-    idSupplier int NOT NULL,
-    orderDate date NOT NULL,
-    PRIMARY KEY (idOrder),
-    FOREIGN KEY (idSupplier) REFERENCES Suppliers(idSupplier) ON DELETE SET NULL ON UPDATE CASCADE
-
 CREATE OR REPLACE TABLE Suppliers (
 	idSupplier int NOT NULL AUTO_INCREMENT,
 	supplierName varchar(255) NOT NULL,
@@ -43,7 +36,15 @@ CREATE OR REPLACE TABLE Sales (
     PRIMARY KEY (idSale),
     FOREIGN KEY (idCustomer) REFERENCES Customers(idCustomer) ON DELETE SET NULL ON UPDATE CASCADE
 );
-   
+
+CREATE OR REPLACE TABLE Orders (
+	idOrder int NOT NULL AUTO_INCREMENT,
+    idSupplier int NULL,
+    orderDate date NOT NULL,
+    PRIMARY KEY (idOrder),
+    FOREIGN KEY (idSupplier) REFERENCES Suppliers(idSupplier) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 CREATE OR REPLACE TABLE SalesDetails (
 	idSalesDetail int NOT NULL AUTO_INCREMENT,
     sid int NOT NULL,
