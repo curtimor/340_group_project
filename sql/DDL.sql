@@ -3,12 +3,13 @@ SET AUTOCOMMIT = 0;
 
 -- Create tables for Gogurt(products), Orders, Sales, Customers an Suppliers
 
-CREATE OR REPLACE TABLE Gogurts (
-	idGogurt int NOT NULL AUTO_INCREMENT,
-    flavor varchar(50) NOT NULL,
-    qtyOnHand int(255),
-    price float NOT NULL,
-    PRIMARY KEY (idGogurt)
+CREATE OR REPLACE TABLE Customers (
+	idCustomer int NOT NULL AUTO_INCREMENT,
+    customerName varchar(100) NOT NULL,
+    email varchar(100) NOT NULL,
+    address varchar(100),
+    PRIMARY KEY(idCustomer),
+    UNIQUE KEY email (email)
 );
 
 CREATE OR REPLACE TABLE Suppliers (
@@ -19,15 +20,22 @@ CREATE OR REPLACE TABLE Suppliers (
 	UNIQUE KEY email (email)
 );
 
-CREATE OR REPLACE TABLE Customers (
-	idCustomer int NOT NULL AUTO_INCREMENT,
-    customerName varchar(100) NOT NULL,
-    email varchar(100) NOT NULL,
-    address varchar(100),
-    PRIMARY KEY(idCustomer),
-    UNIQUE KEY email (email)
+CREATE OR REPLACE TABLE Gogurts (
+	idGogurt int NOT NULL AUTO_INCREMENT,
+    flavor varchar(50) NOT NULL,
+    qtyOnHand int(255),
+    price float NOT NULL,
+    PRIMARY KEY (idGogurt)
 );
-   
+
+CREATE OR REPLACE TABLE Orders (
+	idOrder int NOT NULL AUTO_INCREMENT,
+    idSupplier int,
+    orderDate date NOT NULL,
+    PRIMARY KEY (idOrder),
+    FOREIGN KEY (idSupplier) REFERENCES Suppliers(idSupplier) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 CREATE OR REPLACE TABLE Sales (
 	idSale int NOT NULL AUTO_INCREMENT,
     idCustomer int,
@@ -36,15 +44,7 @@ CREATE OR REPLACE TABLE Sales (
     PRIMARY KEY (idSale),
     FOREIGN KEY (idCustomer) REFERENCES Customers(idCustomer) ON DELETE SET NULL ON UPDATE CASCADE
 );
-
-CREATE OR REPLACE TABLE Orders (
-	idOrder int NOT NULL AUTO_INCREMENT,
-    idSupplier int NULL,
-    orderDate date NOT NULL,
-    PRIMARY KEY (idOrder),
-    FOREIGN KEY (idSupplier) REFERENCES Suppliers(idSupplier) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
+   
 CREATE OR REPLACE TABLE SalesDetails (
 	idSalesDetail int NOT NULL AUTO_INCREMENT,
     sid int NOT NULL,
@@ -73,20 +73,15 @@ CREATE OR REPLACE TABLE OrderDetails (
    
 -- Test that the tables were created
 
+DESCRIBE Customers;
+DESCRIBE Suppliers;
 DESCRIBE Gogurts;
 DESCRIBE Orders;
 DESCRIBE Sales;
-DESCRIBE Customers;
-DESCRIBE Suppliers;
 DESCRIBE SalesDetails;
 DESCRIBE OrderDetails;
 
 -- insert sample data for each table created above
-
-INSERT INTO Gogurts(flavor, qtyOnHand, price)
-VALUES ("Cherry", 25, 2.99),
-("Watermelon", 150, 2.99),
-("Green Apple", 99, 3.49);
 
 INSERT INTO Customers(customerName, email, address)
 VALUES ("Jerry West", "jwest@sample.com", "123 Nice Ave"),
@@ -97,6 +92,11 @@ INSERT INTO Suppliers(supplierName, email)
 VALUES ("Good Yogurt Co.", "goodyogurt@sample.com"),
 ("All Curds Inc.", "allcurds@sample.com"),
 ("South Sides Products", "sideproducts@sample.com");
+
+INSERT INTO Gogurts(flavor, qtyOnHand, price)
+VALUES ("Cherry", 25, 2.99),
+("Watermelon", 150, 2.99),
+("Green Apple", 99, 3.49);
 
 INSERT INTO Orders(idSupplier, orderDate)
 VALUES (1, '2022-03-05'),
