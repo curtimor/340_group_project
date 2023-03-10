@@ -240,6 +240,198 @@ app.delete('/delete-order-ajax/', function(req,res,next){
             }
 })});
 
+// ------------- ROUTE FOR CUSTOMERS--------------------
+app.get('/customers', function(req, res)
+{  
+    let query1 = "SELECT Customers.idCustomer, customerName, email, address FROM Customers";               // Define our query
+
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+        res.render('customers', {data: rows});                 // Render the index.hbs file, and also send the renderer
+    })                                                      // an object where 'data' is equal to the 'rows' we
+});
+
+app.post('/add-customer-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Customers (customerName, email, address) VALUES ('${data.customerName}', '${data.email}', '${data.address}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on Customers
+            query2 = `SELECT * FROM Customers;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.delete('/delete-customer-ajax/', function(req,res,next){
+    let data = req.body;
+    let idCustomer = parseInt(data.id);
+    let deleteCustomer= `DELETE FROM Customers WHERE idCustomer = ?`;
+    
+    // Run the 1st query
+    db.pool.query(deleteCustomer, [idCustomer], function(error, rows, fields){
+        if (error) {
+  
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.sendStatus(400);
+        }
+    })   
+});
+
+// ------------- ROUTE FOR SALES--------------------
+app.get('/sales', function(req, res)
+{  
+    let query1 = "SELECT * FROM Sales"                     // Define our query
+
+    let query2 = "SELECT * FROM SalesDetails"
+
+    let query3 = "SELECT * FROM Customers"
+
+    let query4 = "SELECT * FROM Gogurts"
+
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+        // Save the sales
+        let sales = rows
+
+        // run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+            // save salesDetails
+            let salesDetails = rows
+
+            // run the third query
+            db.pool.query(query3, (error, rows, fields) => {
+                // Save the customers
+                let customers = rows
+            
+                // run the fourth query
+                db.pool.query(query4, (error, rows, fields) => {
+            
+                    // save the gogurts
+                    let gogurts = rows
+                    return res.render('sales', {data: sales, data2: salesDetails, customers: customers, gogurts: gogurts});                 // Render the index.hbs file, and also send the renderer
+                })
+            })
+        })
+    })                                                      // an object where 'data' is equal to the 'rows' we
+});
+
+app.post('/add-sale-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    let idCustomer = parseInt(data.idCustomer)
+    let orderQty = parseInt(data.orderQty)
+    let subTotal = parseFloat(data.subTotal)
+    let idGogurt = parseInt(data.idGogurt)
+    let unitPrice = parseFloat(data.unitPrice)
+    let lineTotal = parseFloat(data.lineTotal)
+
+    // Capture NULL values
+
+    // Create the query and run it on the database
+    let query2 = `INSERT INTO Sales (idCustomer, shipDate, subTotal) VALUES (${idCustomer}, '${data.shipDate}', ${subTotal})`;
+    db.pool.query(query2, function(error, rows, fields){
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on Customers
+            query3 = `SELECT * FROM Sales;`;
+            db.pool.query(query3, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    //save sales rows
+                    let sales = rows
+
+                    // get latest sale id for salesDetails
+                    salesLength = sales.length
+                    idSale = sales[salesLength-1].idSale
+                    
+                    // query salesDetails now
+                    let query4 = `INSERT INTO SalesDetails (sid, gid, salesDate, orderQty, unitPrice, lineTotal) VALUES (${idSale}, ${idGogurt}, '${data.shipDate}', ${orderQty}, ${unitPrice}, ${lineTotal})`
+                    db.pool.query(query4, function(error, rows, fields) {
+                        if (error) {
+                            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                            console.log(error);
+                            res.sendStatus(400);
+                        }
+                        else {
+                            let query5 = `SELECT * FROM SalesDetails;`;
+                            db.pool.query(query5, function(error, rows, fields){
+                                if (error) {
+                                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                                    console.log(error);
+                                    res.sendStatus(400);
+                                }
+                                else {
+                                    res.send(sales)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+});
+
+app.delete('/delete-sale-ajax/', function(req,res,next){
+    let data = req.body;
+    let idSale = parseInt(data.id);
+    let deleteSale= `DELETE FROM Sales WHERE idSale = ?`;  
+    // Run the 1st query
+    db.pool.query(deleteSale, [idSale], function(error, rows, fields){
+        if (error) {
+  
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+           console.log(error);
+        res.sendStatus(400);
+        }
+    })   
+});
+
 /*
     LISTENER
 */
