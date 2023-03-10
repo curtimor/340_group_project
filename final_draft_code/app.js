@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 6364;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 6366;                 // Set a port number at the top so it's easy to change in the future
 
 // app.js
 const { engine } = require('express-handlebars');
@@ -17,8 +17,8 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 var db = require('./database/db-connector')
 
 // app.js - SETUP section
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));         // this is needed to allow for the form to use the ccs style sheet/javscript
     
 
@@ -44,79 +44,11 @@ app.get('/', function(req, res)
     })
 });
 
-// app.get('/', function(req, res)
-// {
-//     // Declare Query 1
-//     let query1;
-
-//     // If there is no query string, we just perform a basic SELECT
-//     if (req.query.lname === undefined)
-//     {
-//         query1 = "SELECT * FROM Customers;";
-//     }
-
-//     // If there is a query string, we assume this is a search, and return desired results
-//     else
-//     {
-//         query1 = `SELECT * FROM bsg_people WHERE lname LIKE "${req.query.lname}%"`
-//     }
-
-//     // Query 2 is the same in both cases
-//     let query2 = "SELECT * FROM bsg_planets;";
-
-//     // Run the 1st query
-//     db.pool.query(query1, function(error, rows, fields){
-        
-//         // Save the people
-//         let people = rows;
-        
-//         // Run the second query
-//         db.pool.query(query2, (error, rows, fields) => {
-            
-//             // Save the planets
-//             let planets = rows;
-
-//             // BEGINNING OF NEW CODE
-
-//             // Construct an object for reference in the table
-//             // Array.map is awesome for doing something with each
-//             // element of an array.
-//             let planetmap = {}
-//             planets.map(planet => {
-//                 let id = parseInt(planet.id, 10);
-
-//                 planetmap[id] = planet["name"];
-//             })
-
-//             // Overwrite the homeworld ID with the name of the planet in the people object
-//             people = people.map(person => {
-//                 return Object.assign(person, {homeworld: planetmap[person.homeworld]})
-//             })
-
-//             // END OF NEW CODE
-//             return res.render('index', {data: people, planets: planets});
-//         })
-//     })
-// });
-
 ///// ---------------------------------------------------------------------------------------------------- html form
 
 app.post('/add-person-form', function(req, res){
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-
-    // Capture NULL values
-    // let customerName = parseInt(data['input-customerName']);
-    // if (isNaN(customerName))
-    // {
-    //     customerName = 'NULL'
-    // }
-
-    // let email = parseInt(data['input-email']);
-    // if (isNaN(email))
-    // {
-    //     email = 'NULL'
-    // }
 
     // Create the query and run it on the database
     query1 = `INSERT INTO Gogurts (flavor, qtyOnHand, price) VALUES ('${data['input-flavor']}', '${data['input-qtyOnHand']}', '${data['input-price']}')`;
@@ -137,97 +69,6 @@ app.post('/add-person-form', function(req, res){
             res.redirect('/');
         }
     })
-})
-// app.post('/add-person-form', function(req, res){
-//     // Capture the incoming data and parse it back to a JS object
-//     let data = req.body;
-
-//     // Capture NULL values
-//     let homeworld = parseInt(data['input-homeworld']);
-//     if (isNaN(homeworld))
-//     {
-//         homeworld = 'NULL'
-//     }
-
-//     let age = parseInt(data['input-age']);
-//     if (isNaN(age))
-//     {
-//         age = 'NULL'
-//     }
-
-//     // Create the query and run it on the database
-//     query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data['input-fname']}', '${data['input-lname']}', ${homeworld}, ${age})`;
-//     db.pool.query(query1, function(error, rows, fields){
-
-//         // Check to see if there was an error
-//         if (error) {
-
-//             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-//             console.log(error)
-//             res.sendStatus(400);
-//         }
-
-//         // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
-//         // presents it on the screen
-//         else
-//         {
-//             res.redirect('/');
-//         }
-//     })
-// });
-
-app.post('/add-person-ajax', function(req, res) 
-{
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Capture NULL values
-    let homeworld = parseInt(data.homeworld);
-    if (isNaN(homeworld))
-    {
-        homeworld = 'NULL'
-    }
-
-    let age = parseInt(data.age);
-    if (isNaN(age))
-    {
-        age = 'NULL'
-    }
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO bsg_people (fname, lname, homeworld, age) VALUES ('${data.fname}', '${data.lname}', ${homeworld}, ${age})`;
-    db.pool.query(query1, function(error, rows, fields){
-
-        // Check to see if there was an error
-        if (error) {
-
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else
-        {
-            // If there was no error, perform a SELECT * on bsg_people
-            query2 = `SELECT bsg_people.id, bsg_people.fname, bsg_people.lname, bsg_people.homeworld, bsg_people.age, bsg_planets.name 
-FROM bsg_people 
-LEFT JOIN bsg_planets ON bsg_people.homeworld = bsg_planets.id;`;
-            db.pool.query(query2, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.sendStatus(400);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    res.send(rows);
-                }
-            })
-        }
-    })
 });
 
 app.delete('/delete-person-ajax/', function(req,res,next){
@@ -245,20 +86,6 @@ app.delete('/delete-person-ajax/', function(req,res,next){
             console.log(error);
             res.sendStatus(400);
             }
-
-            // else
-            // {
-            //     // Run the second query
-            //     db.pool.query(deleteSales, [personID], function(error, rows, fields) {
-
-            //         if (error) {
-            //             console.log(error);
-            //             res.sendStatus(400);
-            //         } else {
-            //             res.sendStatus(204);
-            //         }
-            //     })
-            // }
 })});
 
 app.put('/put-person-ajax', function(req,res,next){                                   
@@ -296,7 +123,122 @@ app.put('/put-person-ajax', function(req,res,next){
             }
 })});
 
+// ------ ROUTE FOR SUPPLIERS
+app.get('/suppliers', function(req, res)
+{
+    // Declare Query 3
+ let query3;
+ 
+ if (req.query.supplierName === undefined){
+    query3 = "SELECT * FROM Suppliers;";
+ }
 
+ else{
+    query3 = `SELECT * FROM Suppliers WHERE supplierName LIKE "${req.query.supplierName}%"`;
+ }
+  
+  
+ db.pool.query(query3, function(error, rows, fields){
+        res.render('suppliers', {data: rows});
+    })
+});
+
+app.post('/add-supplier-form', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Suppliers (supplierName, email) VALUES ('${data.supplierName}', '${data.supplierEmail}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.redirect('/suppliers');
+        }
+    })
+});
+
+app.delete('/delete-supplier-ajax/', function(req,res,next){
+  let data = req.body;
+  let personID = parseInt(data.idSupplier);
+  let deleteSupplier = `DELETE FROM Suppliers WHERE idSupplier = ?`;
+//   let deleteSales= `DELETE FROM Sales WHERE idCustomer = ?`;
+
+
+        // Run the 1st query
+        db.pool.query(deleteSupplier, [personID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+})});
+
+// ------------- ROUTE FOR ORDERS--------------------
+app.get('/orders', function(req, res)
+{
+    // Declare Query 3
+ let query4;
+ 
+ if (req.query.idOrder === undefined){
+    query4 = "SELECT * FROM Orders;";
+ }
+
+ else{
+    query4 = `SELECT * FROM Orders WHERE idOrder LIKE "${req.query.idOrder}%"`;
+ }
+  
+  
+ db.pool.query(query4, function(error, rows, fields){
+        res.render('orders', {data: rows});
+    })
+});
+
+app.post('/add-order-form', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Orders (idSupplier, orderDate) VALUES ('${data.idSupplier}', '${data.orderDate}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.redirect('/orders');
+        }
+    })
+});
+
+app.delete('/delete-order-ajax/', function(req,res,next){
+  let data = req.body;
+  let personID = parseInt(data.idOrder);
+  let deleteOrder = `DELETE FROM Orders WHERE idOrder = ?`;
+//   let deleteSales= `DELETE FROM Sales WHERE idCustomer = ?`;
+
+        // Run the 1st query
+        db.pool.query(deleteOrder, [personID], function(error, rows, fields){
+            if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+})});
 
 /*
     LISTENER

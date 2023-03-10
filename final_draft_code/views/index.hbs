@@ -1,133 +1,143 @@
+<html>
 
-<!-- index.hbs -->
-<h1>Gogurt Inc</h1>
-<p>If you see this text, the server is <strong>definitely</strong> working!</p>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <title>Gogurts</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+</head>
+
+<body>
+    <!-- index.hbs -->
+    <h1>Gogurt Inc</h1>
+    <p>If you see this text, the server is <strong>definitely</strong> working!</p>
+    {{!-- nav bar --}}
+    <nav class="navbar navbar-expand navbar-light bg-light text-center">
+        <div class="collapse navbar-collapse p-1" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a href="/" class="nav-link active">Gogurts</a>
+                </li>
+                <li class="nav-item active">
+                    <li><a href="suppliers" class="nav-link">Suppliers</a></li>
+                </li>
+                <li class="nav-item active">
+                    <li><a href="orders" class="nav-link">Orders</a></li>
+                </li>
+                <li class="nav-item active">
+                    <li><a href="sales" class="nav-link">Sales</a></li>
+                </li>
+                <li class="nav-item active">
+                    <li><a href="customers" class="nav-link">Customers</a></li>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 
-{{!-- Create a table --}}
-<table id="people-table">>
+    {{!-- Create a table --}}
+    <table id="people-table">>
 
-    {{!-- Header section --}}
-    <thead>
+        {{!-- Header section --}}
+        <thead>
 
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+                <th>delete</th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+            {{#each data}}
+            <tr>
+                <td>{{this.idGogurt}}</td>
+                <td>{{this.flavor}}</td>
+                <td>{{this.qtyOnHand}}</td>
+                <td>{{this.price}}</td>
+                <td><button onclick="deletePerson({{this.idGogurt}})">Delete</button></td>
+            </tr>
             {{/each}}
-            <th>delete</th>
-        </tr>
-    </thead>
+        </tbody>
+    </table>
+    <script src="./js/delete_person.js"></script>
 
-    {{!-- Body section --}}
-    <tbody>
+    <!-- /views/index.hbs -->
+    {{!-- Form to add a record to the table using standard HTML forms --}}
+    <h2>Adding Gogurt Data using an HTML form</h2>
+    <p>To add a new Gogurt item, please enter the information below and click `Submit`!</p>
+    <form id="add-person-form" method="POST" action="/add-person-form">
+        <label for="input-flavor">Flavor: </label>
+        <input type="text" name="input-flavor" id="input-flavor">
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data}}
-        <tr>
-            <td>{{this.idGogurt}}</td>
-            <td>{{this.flavor}}</td>
-            <td>{{this.qtyOnHand}}</td>
-            <td>{{this.price}}</td>
-            <td><button onclick="deletePerson({{this.idGogurt}})">Delete</button></td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-<script src="./js/delete_person.js"></script>
+        <label for="input-qtyOnHand">qtyOnHand: </label>
+        <input type="text" name="input-qtyOnHand" id="input-qtyOnHand">
 
-<!-- /views/index.hbs -->
-{{!-- Form to add a record to the table using standard HTML forms --}}
-<h2>Adding Gogurt Data using an HTML form</h2>
-<p>To add a new Gogurt item, please enter the information below and click `Submit`!</p>
-<form id="add-person-form" method="POST" action="/add-person-form">
-    <label for="input-flavor">Flavor: </label>
-    <input type="text" name="input-flavor" id="input-flavor">
-    
-    <label for="input-qtyOnHand">qtyOnHand: </label>
-    <input type="text" name="input-qtyOnHand" id="input-qtyOnHand">
+        <label for="input-price">price: </label>
+        <input type="text" name="input-price" id="input-price">
 
-    <label for="input-price">price: </label>
-    <input type="text" name="input-price" id="input-price">
+        {{!-- <label for="input-age">Age: </label>
+        <input type="number" name="input-age" id="input-age"> --}}
 
-    {{!-- <label for="input-age">Age: </label>
-    <input type="number" name="input-age" id="input-age"> --}}
+        <input type="submit">
+    </form>
 
-    <input type="submit">
-</form> 
+    <h2>Search for Gogurt by flavor</h2>
+    <p>Search by flavor using the field below!</p>
+    <form id="search-person-html" method='GET' action='/'>
+        <label for="input-flavor">Search by Flavor: </label>
+        <input type="text" name="flavor" id="input-flavor-html-search">
 
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
 
-<!-- /views/index.hbs -->
+    <h2>Updating A Gogurt Form</h2>
+    {{!-- <p>To update a specific user's homeworld select their name from the drop-down menu on the left and their
+        desired homeworld from the drop down menu on the right</p> --}}
+    <form id="update-person-form-ajax">
 
-{{!-- Form to add a record to the table  --}}
-{{!-- <h2>Adding Data with AJAX</h2>
-<p>To add a new person, please enter their information below and click 'Submit'!</p>
-<form id="add-person-form-ajax">
-    <label for="input-fname">First Name: </label>
-    <input type="text" name="input-fname" id="input-fname">
-    
-    <label for="input-lname">Last Name: </label>
-    <input type="text" name="input-lname" id="input-lname">
+        <label for="input-flavor">Flavor: </label>
+        <select name="input-flavor" id="mySelect">
+            <option value="test">Select a Flavor</option>
+            {{#each data}}
+            <option value="{{this.idGogurt}}">{{this.flavor}}</option>
+            {{/each}}
+        </select>
 
+        <label for="input-qtyOnHand">quantity on hand: </label>
+        <input type="number" name="input-qtyOnHand" id="input-qtyOnHand-update">
 
-    <label for="input-homeworld">Homeworld: </label>
-    <select name="input-homeworld" id="input-homeworld">
-        <option value="">Select a Planet</option>
-        {{#each planets}}
-        <option value="{{this.id}}">{{this.name}}</option>
-        {{/each}}
-    </select>
+        <label for="input-price">Price: </label>
+        <input type="number" step="any" name="input-price" id="input-price-update"> --}}
 
-    <label for="input-age">Age: </label>
-    <input type="number" name="input-age" id="input-age">
+        <select name="input-qtyOnHand" id="input-qtyOnHand-update">
+            <option>Select a Amount</option>
+            {{#each data}}
+            <option value="{{this.idGogurt}}">{{this.qtyOnHand}}</option>
+            {{/each}}
+        </select>
+        <input type="submit">
 
-    <input type="submit">
-</form>
+    </form>
 
-{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
-<script src="./js/add_person.js"></script> --}}
+    <script src="./js/update_person.js"></script>
 
-<h2>Search for Gogurt by flavor</h2>
-<p>Search by flavor using the field below!</p>
-<form id="search-person-html" method='GET' action='/'>
-    <label for="input-flavor">Search by Flavor: </label>
-    <input type="text" name="flavor" id="input-flavor-html-search">
-    
-    <input type="submit">
-    <a href='/'><button>Reset</button></a>
-</form>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
 
-<h2>Updating A Gogurt Form</h2>
-{{!-- <p>To update a specific user's homeworld select their name from the drop-down menu on the left and their desired homeworld from the drop down menu on the right</p> --}}
-<form id="update-person-form-ajax">
-
-    <label for="input-flavor">Flavor: </label>
-    <select name="input-flavor" id="mySelect">
-        <option value="test">Select a Flavor</option>
-        {{#each data}}
-        <option value="{{this.idGogurt}}">{{this.flavor}}</option>
-        {{/each}}
-    </select>
-
-    <label for="input-qtyOnHand">quantity on hand: </label>
-    <input type="number" name="input-qtyOnHand" id="input-qtyOnHand-update">
-
-    <label for="input-price">Price: </label>
-    <input type="number" step="any" name="input-price" id="input-price-update">
-
-    {{!-- <select name="input-qtyOnHand" id="input-qtyOnHand-update">
-        <option>Select a Amount</option>
-        {{#each data}}
-        <option value="{{this.idGogurt}}">{{this.qtyOnHand}}</option>
-        {{/each}}
-    </select> --}}
-    <input type="submit">
-
-</form>
-
-<script src="./js/update_person.js"></script>
-
+</html>
