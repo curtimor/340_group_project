@@ -1,3 +1,8 @@
+//Citation for the following page:
+//Date: 3-20-2022
+//This page is adapted from the Node JS starter code app.js file
+//Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 function deleteCustomer(idCustomer) {
     // Put our data we want to send in a javascript object
     let data = {
