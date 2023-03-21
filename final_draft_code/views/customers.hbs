@@ -31,6 +31,7 @@
         </div>
     </nav>
 
+<h2>Customers</h2>
 <table id="customers-table">
 
     {{!-- Header section --}}
@@ -51,7 +52,6 @@
     {{!-- Body section --}}
     <tbody>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
         <tr>
             <td>{{this.idCustomer}}</td>
@@ -65,6 +65,8 @@
 </table>
 <script src="./js/delete_customer.js"></script>
 <!-- /views/customers.handlebars -->
+
+<p>&nbsp;</p>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data with AJAX</h2>
