@@ -39,7 +39,8 @@
 
 
     {{!-- Create a table --}}
-    <table id="people-table">>
+    <h2>Orders</h2>
+    <table id="orders-table">
 
         {{!-- Header section --}}
         <thead>
@@ -59,7 +60,6 @@
         {{!-- Body section --}}
         <tbody>
 
-            {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
             {{#each data}}
             <tr>
                 <td>{{this.idOrder}}</td>
@@ -73,66 +73,81 @@
     </table>
     <script src="./js/delete_order.js"></script>
 
-    <!-- /views/index.hbs -->
-    {{!-- Form to add a record to the table using standard HTML forms --}}
-    <h2>Adding Order Data using an HTML form</h2>
-    <p>To add a new Order, please enter the information below and click `Submit`!</p>
-    <form id="add-person-form" method="POST" action="/add-order-form">
-        <label for="idSupplier">Enter associated supplier (supplier ID): </label>
-        <input type="number" name="idSupplier" id="idSupplier">
+    <p>&nbsp;</p>
 
-        <label for="orderDate">Enter the order date (yyyy/mm/dd): </label>
-        <input type="text" name="orderDate" id="orderDate">
+    <h2>Orders Details</h2>
+    <table id="ordersDetails-table">
 
-        {{!-- <label for="input-price">price: </label>
-        <input type="text" name="input-price" id="input-price"> --}}
+        {{!-- Header section --}}
+        <thead>
 
-        {{!-- <label for="input-age">Age: </label>
-        <input type="number" name="input-age" id="input-age"> --}}
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+                {{#each data2.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}}
+            </tr>
+        </thead>
 
-        <input type="submit">
-    </form>
+        {{!-- Body section --}}
+        <tbody>
 
-    <h2>Search for an Order by order ID</h2>
-    <p>Search for an Order using the field below!</p>
-    <form id="search-person-html" method='GET' action='/orders'>
-        <label for="idOrder">Search by order ID: </label>
-        <input type="text" name="idOrder" id="idOrder-html-search">
+            {{#each data2}}
+            <tr>
+                <td>{{this.idOrderDetail}}</td>
+                <td>{{this.oid}}</td>
+                <td>{{this.gid}}</td>
+                <td>{{this.orderDate}}</td>
+                <td>{{this.orderQty}}</td>
+                <td>{{this.unitPrice}}</td>
+                <td>{{this.lineTotal}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
-        <input type="submit">
-        <a href='/orders'><button>Reset</button></a>
-    </form>
-
-    {{!-- <h2>Updating A Gogurt Form</h2> --}}
-    {{!-- <p>To update a specific user's homeworld select their name from the drop-down menu on the left and their
-        desired homeworld from the drop down menu on the right</p> --}}
-    {{!-- <form id="update-person-form-ajax">
-
-        <label for="input-flavor">Flavor: </label>
-        <select name="input-flavor" id="mySelect">
-            <option value="test">Select a Flavor</option>
-            {{#each data}}
+    <p>&nbsp;</p>
+    {{!-- Form to add a record to the table  --}}
+    <h2>Adding Data with AJAX</h2>
+    <p>To add a new sale, please fill out the information below and click 'Submit'!</p>
+    <form id="add-order-form-ajax">
+        <label for="input-idSupplier-ajax">Enter associated supplier (supplier ID): </label>
+        <select name="input-idSupplier-ajax" id="input-idSupplier-ajax">
+            <option value="">Select a Supplier</option>
+                {{#each suppliers}}
+            <option value="{{this.idSupplier}}">{{this.supplierName}}</option>
+                {{/each}}
+        </select>
+    
+        <label for="input-idGogurt">Gogurt ID: </label>
+        <select name="input-idGogurt" id="input-idGogurt-ajax">
+            <option value="">Select a Gogurt</option>
+            {{#each gogurts}}
             <option value="{{this.idGogurt}}">{{this.flavor}}</option>
             {{/each}}
         </select>
 
-        <label for="input-qtyOnHand">quantity on hand: </label>
-        <input type="number" name="input-qtyOnHand" id="input-qtyOnHand-update">
+        <label for="input-orderDate">Order date: </label>
+        <input type="date" name="input-orderDate" id="input-orderDate-ajax">
 
-        <label for="input-price">Price: </label>
-        <input type="number" step="any" name="input-price" id="input-price-update"> --}}
+        <label for="input-orderQty">Order Quantity: </label>
+        <input type="number" name="input-orderQty" id="input-orderQty-ajax">
 
-        {{!-- <select name="input-qtyOnHand" id="input-qtyOnHand-update">
-            <option>Select a Amount</option>
-            {{#each data}}
-            <option value="{{this.idGogurt}}">{{this.qtyOnHand}}</option>
-            {{/each}}
-        </select> --}}
-        {{!-- <input type="submit">
+        <label for="input-unitPrice">Unit price: </label>
+        <input type="number" step="0.01"name="input-unitPrice" id="input-unitPrice-ajax">
 
+        <label for="input-subTotal">SubTotal: </label>
+        <input type="number" step="0.01" name="input-subTotal" id="input-subTotal-ajax">
+
+        <input type="submit">
     </form>
 
-    <script src="./js/update_person.js"></script> --}}
+    <script src="./js/add_order.js"></script>
+
+    <script src="./js/update_person.js"></script>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
