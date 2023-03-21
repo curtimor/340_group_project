@@ -1,8 +1,8 @@
 //code for deleteSupplier function using jQuery
-function deleteSupplier(personID) {
+function deleteSupplier(idSupplier) {
     let link = '/delete-supplier-ajax/';
     let data = {
-      idSupplier: personID
+      idSupplier: idSupplier
     };
   
     $.ajax({
@@ -11,57 +11,31 @@ function deleteSupplier(personID) {
       data: JSON.stringify(data),
       contentType: "application/json; charset=utf-8", 
       success: function(result) {
-        deleteRow(personID);
+        deleteRow(idSupplier);
       }
     });
+    location.reload()
   }
   
-  // code for deletePerson using regular javascript/xhttp
-  // function deletePerson(personID) {
-  //     // Put our data we want to send in a javascript object
-  //     let data = {
-  //         idCustomer: personID
-  //     };
-      
-  //     // Setup our AJAX request
-  //     var xhttp = new XMLHttpRequest();
-  //     xhttp.open("DELETE", "/delete-person-ajax", true);
-  //     xhttp.setRequestHeader("Content-type", "application/json");
+  function deleteRow(idSupplier){
   
-  //     // Tell our AJAX request how to resolve
-  //     xhttp.onreadystatechange = () => {
-  //         if (xhttp.readyState == 4 && xhttp.status == 204) {
-  
-  //             // Add the new data to the table
-  //             deleteRow(personID);
-  //         }
-  //         else if (xhttp.readyState == 4 && xhttp.status != 204) {
-  //             console.log("There was an error with the input.")
-  //         }
-  //     }
-  //     // Send the request and wait for the response
-  //     xhttp.send(JSON.stringify(data));
-  // }
-  
-  function deleteRow(personID){
-  
-      let table = document.getElementById("people-table");
+      let table = document.getElementById("suppliers-table");
       for (let i = 0, row; row = table.rows[i]; i++) {
          //iterate through rows
          //rows would be accessed using the "row" variable assigned in the for loop
-         if (table.rows[i].getAttribute("data-value") == personID) {
+         if (table.rows[i].getAttribute("data-value") == idSupplier) {
               table.deleteRow(i);
-              deleteDropDownMenu(personID);
+              deleteDropDownMenu(idSupplier);
               break;
          }
       }
   }
   
   
-  function deleteDropDownMenu(personID){
+  function deleteDropDownMenu(idSupplier){
     let selectMenu = document.getElementById("mySelect");
     for (let i = 0; i < selectMenu.length; i++){
-      if (Number(selectMenu.options[i].value) === Number(personID)){
+      if (Number(selectMenu.options[i].value) === Number(idSupplier)){
         selectMenu[i].remove();
         break;
       } 
