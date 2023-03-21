@@ -1,14 +1,14 @@
 <html>
 
 <head>
-    <title>Customers</title>
+    <title>Sales</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
 </head>
 
-<h1>Sales</h2>
+<h1>Sales</h1>
 <table id="sales-table">
     <nav class="navbar navbar-expand navbar-light bg-light text-center">
         <div class="collapse navbar-collapse p-1" id="navbarNav">
@@ -32,9 +32,9 @@
         </div>
     </nav>
 
+    <h2>Sales</h2>
     {{!-- Header section --}}
     <thead>
-
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
@@ -50,7 +50,6 @@
     {{!-- Body section --}}
     <tbody>
 
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
         {{#each data}}
         <tr>
             <td>{{this.idSale}}</td>
@@ -63,8 +62,44 @@
     </tbody>
 </table>
 <script src="./js/delete_sale.js"></script>
-<!-- /views/customers.handlebars -->
 
+<p>&nbsp;</p>
+
+<h2>Sales Details</h2>
+<table id="salesDetails-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data2.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{#each data2}}
+        <tr>
+            <td>{{this.idSalesDetail}}</td>
+            <td>{{this.sid}}</td>
+            <td>{{this.gid}}</td>
+            <td>{{this.salesDate}}</td>
+            <td>{{this.orderQty}}</td>
+            <td>{{this.unitPrice}}</td>
+            <td>{{this.lineTotal}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
 {{!-- Form to add a record to the table  --}}
 <h2>Adding Data with AJAX</h2>
 <p>To add a new sale, please fill out the information below and click 'Submit'!</p>
@@ -103,40 +138,4 @@
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_sale.js"></script>
 
-<p>&nbsp;</p>
-
-<h2>Sales Details</h2>
-<table id="salesDetails-table">
-
-    {{!-- Header section --}}
-    <thead>
-
-        {{!-- For just the first row, we print each key of the row object as a header cell so we
-        know what each column means when the page renders --}}
-        <tr>
-            {{#each data2.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-        </tr>
-    </thead>
-
-    {{!-- Body section --}}
-    <tbody>
-
-        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
-        {{#each data2}}
-        <tr>
-            <td>{{this.idSalesDetail}}</td>
-            <td>{{this.sid}}</td>
-            <td>{{this.gid}}</td>
-            <td>{{this.salesDate}}</td>
-            <td>{{this.orderQty}}</td>
-            <td>{{this.unitPrice}}</td>
-            <td>{{this.lineTotal}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
 </html>
