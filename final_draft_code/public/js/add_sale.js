@@ -1,3 +1,8 @@
+//Citation for the following page:
+//Date: 3-20-2022
+//This page is adapted from the Node JS starter code app.js file
+//Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 // Get the objects we need to modify
 let addSaleForm = document.getElementById('add-sale-form-ajax');
 
