@@ -39,7 +39,8 @@
 
 
     {{!-- Create a table --}}
-    <table id="people-table">>
+    <h2>Suppliers</h2>
+    <table id="suppliers-table">
 
         {{!-- Header section --}}
         <thead>
@@ -59,7 +60,6 @@
         {{!-- Body section --}}
         <tbody>
 
-            {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
             {{#each data}}
             <tr>
                 <td>{{this.idSupplier}}</td>
@@ -73,6 +73,7 @@
     </table>
     <script src="./js/delete_supplier.js"></script>
 
+    <p>&nbsp;</p>
     <!-- /views/index.hbs -->
     {{!-- Form to add a record to the table using standard HTML forms --}}
     <h2>Adding Supplier Data using an HTML form</h2>
@@ -84,23 +85,7 @@
         <label for="supplierEmail">Email: </label>
         <input type="text" name="supplierEmail" id="supplierEmail">
 
-        {{!-- <label for="input-price">price: </label>
-        <input type="text" name="input-price" id="input-price"> --}}
-
-        {{!-- <label for="input-age">Age: </label>
-        <input type="number" name="input-age" id="input-age"> --}}
-
         <input type="submit">
-    </form>
-
-    <h2>Search for Supplier by the company name</h2>
-    <p>Search Suppliers using the field below!</p>
-    <form id="search-person-html" method='GET' action='/suppliers'>
-        <label for="supplierName">Search by Company Name: </label>
-        <input type="text" name="supplierName" id="supplierName-html-search">
-
-        <input type="submit">
-        <a href='/suppliers'><button>Reset</button></a>
     </form>
 
     <!-- JavaScript Bundle with Popper -->
